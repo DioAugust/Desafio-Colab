@@ -6,12 +6,11 @@ import Col from 'react-bootstrap/Col'
 
 const Home = () => {
   return (
-    <Container className="d-flex align-items-center">
+    <Container className="d-flex align-items-center text-center">
       <Row>
         <Col>
-          <h1>colab</h1>
-          <h2>Teste vaga desenvolvedor full stack</h2>
-          <h3>
+          <h2 className="mb-5">Teste desenvolvedor full stack</h2>
+          <h3 className="mb-5">
             O objetivo deste teste é avaliar suas habilidades de desenvolvimento Fullstack,
             especialmente em TypeScript e React. Você será solicitado a criar uma aplicação web que
             consuma a API Random User Generator para exibir uma lista de usuários e os detalhes de

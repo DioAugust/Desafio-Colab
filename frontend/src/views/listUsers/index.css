@@ -1,0 +1,13 @@
+.cardStyle {
+  margin: 10px;
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.cardStyle:hover {
+  box-shadow: 0 0 10px #209ff3;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+
