@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { RandomApiService } from './random-api.service'
 import { HttpService } from '@nestjs/axios'
-import { of } from 'rxjs'
+import { from } from 'rxjs'
 import { RandomUserInterface } from '../interface/get-users.interface'
 
 describe('RandomApiService', () => {
@@ -77,7 +77,9 @@ describe('RandomApiService', () => {
           },
         },
       ]
-      jest.spyOn(httpService, 'get').mockReturnValueOnce(of({ data: mockUsers } as any))
+      jest
+        .spyOn(httpService, 'get')
+        .mockReturnValueOnce(from(Promise.resolve({ data: { results: mockUsers } } as any)))
       // Act
       const result = await randomApiService.getRandomUsers()
       // Assert

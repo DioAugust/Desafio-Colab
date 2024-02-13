@@ -1,3 +1,6 @@
+export interface ArrayOfRandomUserInterface {
+  results: RandomUserInterface[]
+}
 export interface RandomUserInterface {
   gender: string
   name: Name

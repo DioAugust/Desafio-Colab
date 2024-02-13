@@ -1,14 +1,39 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Param } from '@nestjs/common'
 import { RandomApiService } from '../service/random-api.service'
+import { RandomUserInterface } from '../interface/get-users.interface'
 
 @Controller('api')
 export class RandomApiController {
+  private cachedUsers: RandomUserInterface[] | null = null
   constructor(private readonly randomApiService: RandomApiService) {}
 
   @Get('/getUsers')
   async getUsers() {
+    if (this.cachedUsers) {
+      return this.cachedUsers
+    }
     const result = await this.randomApiService.getRandomUsers()
-    console.log(result)
+    this.cachedUsers = result
+    console.log(this.cachedUsers)
+    return this.cachedUsers
+  }
+
+  @Get('/freshUsers')
+  async freshUsers() {
+    const result = await this.randomApiService.getRandomUsers()
     return result
+  }
+
+  @Get('/getUser/:id')
+  async getUser(@Param('id') id: string) {
+    if (!this.cachedUsers) {
+      this.cachedUsers = await this.randomApiService.getRandomUsers()
+    }
+
+    const user = this.cachedUsers.find((user) => user.id.value === id)
+    if (!user) {
+      message: 'User not found'
+    }
+    return user
   }
 }
