@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { Container, Col, Row, Pagination, Navbar } from 'react-bootstrap'
 
 import { User } from "../../model/types/index"
-import { getUsers } from "../../model/services/index"
+import { getFreshUsers, getUsers } from "../../model/services/index"
 
 import UserCard from "../components/UserCard"
 import CustomOffcanvas from "../components/CustomCanvas"
@@ -19,6 +19,11 @@ const ListUsers = () => {
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+
+  const freshUser = async () => {
+    const userData = await getFreshUsers()
+    setUsers(userData)
+  }
 
 
   useEffect(() => {
@@ -54,28 +59,33 @@ const ListUsers = () => {
           <Navbar.Brand className="brandValues fs-5 d-none d-lg-block">
             Colaboração, Resiliência, Agilidade, Ética e Conhecimento.
           </Navbar.Brand>
-          <img src={menu} className="d-lg-none menuButton mx-3" onClick={handleShow} width="60" height="60" alt="menu" />
+          <img src={menu} className="d-lg-none menuButton " onClick={handleShow} width="50" height="50" alt="menu" />
         </div>
       </Navbar>
 
 
       <Container fluid>
         <Row>
-          <Col md={2} className="p-0">
-            <CustomOffcanvas show={show} handleClose={handleClose} />
+          <Col md={2} className="p-0 d-none d-lg-block">
+            <CustomOffcanvas show={show} handleClose={handleClose} carregarNewUsers={freshUser} />
           </Col>
-          <Col>
+          <Col md={10}>
             <div>
               <h1 className="my-4 text-center">Lista de usuários</h1>
             </div>
             <Row>
+
               {visibleItems.map((user, index) => (
-                <UserCard key={index} user={user} />
+                <Col lg={3} md={6}>
+                  <UserCard key={index} user={user} />
+                </Col>
               ))}
+
             </Row>
 
             <Navbar className="justify-content-center">
-              <Pagination size="lg">
+
+              <Pagination className="" >
                 <Pagination.First onClick={() => setActivePage(1)} />
                 <Pagination.Prev onClick={() => setActivePage((prev) => Math.max(prev - 1, 1))} />
                 {items.map((number) => (
@@ -91,6 +101,7 @@ const ListUsers = () => {
                 <Pagination.Last onClick={() => setActivePage(totalPages)} />
               </Pagination>
             </Navbar>
+
           </Col>
         </Row>
       </Container>

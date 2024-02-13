@@ -21,6 +21,7 @@ export class RandomApiController {
   @Get('/freshUsers')
   async freshUsers() {
     const result = await this.randomApiService.getRandomUsers()
+    this.cachedUsers = result
     return result
   }
 
@@ -30,7 +31,7 @@ export class RandomApiController {
       this.cachedUsers = await this.randomApiService.getRandomUsers()
     }
 
-    const user = this.cachedUsers.find((user) => user.id.value === id)
+    const user = this.cachedUsers.find((user) => user.login.uuid === id)
     if (!user) {
       message: 'User not found'
     }

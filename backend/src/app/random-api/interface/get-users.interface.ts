@@ -6,6 +6,7 @@ export interface RandomUserInterface {
   name: Name
   location: Location
   email: string
+  login: Login
   dob: Dob
   phone: string
   cell: string
@@ -13,6 +14,15 @@ export interface RandomUserInterface {
   picture: Picture
 }
 
+export interface Login {
+  uuid: string
+  username: string
+  password: string
+  salt: string
+  md5: string
+  sha1: string
+  sha256: string
+}
 export interface Picture {
   large: string
   medium: string

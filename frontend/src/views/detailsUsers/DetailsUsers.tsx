@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { User } from "../../model/types/User"
+import { useParams } from "react-router-dom"
+import { getUser } from "../../model/services/index"
 
-interface DetailsUsersProps {
-    user: User;
-  }
+const DetailsUsers = () => {
+    const { userId } = useParams()
+    const [user, setUser] = useState<User | null>(null)
 
-const DetailsUsers: React.FC<DetailsUsersProps> = ({ user }) => {
+    useEffect(() => {
+        if (!userId) return
+        const fetchData = async () => {
+            const usersData = await getUser(userId)
+            setUser(usersData)
+        }
+
+        fetchData()
+    }, [userId])
     return (
         <div >
-            <h1>{user.name.title}</h1>
+            <h1>{user?.name.title}</h1>
 
         </div>
-    ) 
+    )
 }
 
 export default DetailsUsers

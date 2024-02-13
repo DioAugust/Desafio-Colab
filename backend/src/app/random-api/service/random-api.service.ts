@@ -10,7 +10,7 @@ export class RandomApiService {
   async getRandomUsers(): Promise<RandomUserInterface[]> {
     const response = await firstValueFrom(
       this.httpService.get<ArrayOfRandomUserInterface>(
-        'https://randomuser.me/api?results=25&nat=br&exc=login,nat,registered&noinfo',
+        'https://randomuser.me/api?results=25&nat=br&exc=nat,registered&noinfo',
       ),
     )
 
