@@ -1,75 +1,102 @@
 import { useState, useEffect } from "react"
-import User from "../../types/User"
+import { Container, Col, Row, Pagination, Navbar } from 'react-bootstrap'
 
-import { Card, Container, Col, Row, Pagination, Navbar, Image } from 'react-bootstrap'
-import smartPhone from '../../assets/smartphone.png'
+import { User } from "../../model/types/index"
+import { getUsers } from "../../model/services/index"
+
+import UserCard from "../components/UserCard"
+import CustomOffcanvas from "../components/CustomCanvas"
+
+import logoColab from '../../assets/logoColab.png'
+import menu from '../../assets/menu.png'
 import './index.css'
 
-import axios from "axios"
 
 const ListUsers = () => {
   const [activePage, setActivePage] = useState(1)
   const [users, setUsers] = useState<User[]>([])
+  const [show, setShow] = useState(false)
 
-  function getUsers() {
-    axios.get('https://randomuser.me/api?results=25')
-      .then(response => {
-        setUsers(response.data.results)
-      })
-  }
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
 
   useEffect(() => {
-    getUsers()
-  }, [])
+    const fetchData = async () => {
+      const usersData = await getUsers()
+      setUsers(usersData)
+    }
 
-// configs das pages
+    fetchData()
+  }, [activePage])
+
+  // configs das pages
   const itemsPerPage = 8
   const totalItems = users.length
   const totalPages = Math.ceil(totalItems / itemsPerPage)
-// definindo o numero de paginas
+  // definindo o numero de paginas
   const items = Array.from({ length: totalPages }, (_, index) => index + 1)
-// definindo primeira e ultima pagina
+  // definindo primeira e ultima pagina
   const startIndex = (activePage - 1) * itemsPerPage
   const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
-// separando os usuarios por pagina
+  // separando os usuarios por pagina
   const visibleItems = users.slice(startIndex, endIndex)
 
   return (
-    <Container className="text-center">
-      <Row>
-        {visibleItems.map((user, index) => (
-          <Col xs={6} md={3} key={index}>
-            <a href="/details">
-              <Card border="light" className="m-2 cardStyle">
-                <Image className="w-50 mt-4 mx-auto" src={user.picture.large} roundedCircle alt="User Thumbnail" />
-                <Card.Body>
-                  <Card.Title>{`${user.name.first} ${user.name.last}`}</Card.Title>
-                  <Card.Subtitle>{user.location.state}</Card.Subtitle>
-                  <Card.Text>{user.email} <Image src={smartPhone} alt="Phone Thumbnail" /> </Card.Text>
-                </Card.Body>
-              </Card>
-            </a>
-          </Col>
-        ))}
-      </Row>
+    <Container fluid className="p-0">
+      <Navbar className="align-items-center border justify-content-between">
+        <div className="justify-content-start align-items-center">
+          <Navbar.Brand href="/" className="fs-1 fw-bold colab-color">
+            <img src={logoColab} width="80" height="80" alt="colab logo" /> Colab
+          </Navbar.Brand>
 
-      <Navbar fixed="bottom" className="justify-content-center">
-        <Pagination size="lg">
-          <Pagination.First onClick={() => setActivePage(1)} />
-          <Pagination.Prev onClick={() => setActivePage((prev) => Math.max(prev - 1, 1))} />
-          {items.map((number) => (
-            <Pagination.Item
-              key={number}
-              active={number === activePage}
-              onClick={() => setActivePage(number)}
-            >
-              {number}
-            </Pagination.Item>
-          ))}
-          <Pagination.Next onClick={() => setActivePage((prev) => Math.min(prev + 1, totalPages))} />
-          <Pagination.Last onClick={() => setActivePage(totalPages)} />
-        </Pagination>
+        </div>
+        <div className="">
+          <Navbar.Brand href="/" className="fs-5 colab-color d-none d-lg-block">
+            Colaboração, Resiliência, Agilidade, Ética e Conhecimento.
+          </Navbar.Brand>
+          <img src={menu} className="d-lg-none menuButton mx-3" onClick={handleShow} width="60" height="60" alt="menu" />
+        </div>
       </Navbar>
+
+
+      <Container fluid>
+        <Row>
+          <Col md={2} className="p-0">
+            <CustomOffcanvas show={show} handleClose={handleClose} />
+          </Col>
+
+          <Col>
+            <div>
+              <h1 className="my-5 text-center">Lista de usuários</h1>
+            </div>
+            <Row>
+              {visibleItems.map((user, index) => (
+                <UserCard key={index} user={user} />
+              ))}
+            </Row>
+
+            <Navbar className="justify-content-center">
+              <Pagination size="lg">
+                <Pagination.First onClick={() => setActivePage(1)} />
+                <Pagination.Prev onClick={() => setActivePage((prev) => Math.max(prev - 1, 1))} />
+                {items.map((number) => (
+                  <Pagination.Item
+                    key={number}
+                    active={number === activePage}
+                    onClick={() => setActivePage(number)}
+                  >
+                    {number}
+                  </Pagination.Item>
+                ))}
+                <Pagination.Next onClick={() => setActivePage((prev) => Math.min(prev + 1, totalPages))} />
+                <Pagination.Last onClick={() => setActivePage(totalPages)} />
+              </Pagination>
+            </Navbar>
+          </Col>
+        </Row>
+      </Container>
+
     </Container>
   )
 }
