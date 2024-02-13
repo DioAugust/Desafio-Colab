@@ -43,16 +43,15 @@ const ListUsers = () => {
   const visibleItems = users.slice(startIndex, endIndex)
 
   return (
-    <Container fluid className="p-0">
-      <Navbar className="align-items-center border justify-content-between">
+    <Container fluid >
+      <Navbar className="align-items-center justify-content-between">
         <div className="justify-content-start align-items-center">
-          <Navbar.Brand href="/" className="fs-1 fw-bold colab-color">
-            <img src={logoColab} width="80" height="80" alt="colab logo" /> Colab
+          <Navbar.Brand href="/" className="fs-2 fw-bold colab-color">
+            <img src={logoColab} width="50" height="50" alt="colab logo" /> colab
           </Navbar.Brand>
-
         </div>
-        <div className="">
-          <Navbar.Brand href="/" className="fs-5 colab-color d-none d-lg-block">
+        <div>
+          <Navbar.Brand className="brandValues fs-5 d-none d-lg-block">
             Colaboração, Resiliência, Agilidade, Ética e Conhecimento.
           </Navbar.Brand>
           <img src={menu} className="d-lg-none menuButton mx-3" onClick={handleShow} width="60" height="60" alt="menu" />
@@ -65,10 +64,9 @@ const ListUsers = () => {
           <Col md={2} className="p-0">
             <CustomOffcanvas show={show} handleClose={handleClose} />
           </Col>
-
           <Col>
             <div>
-              <h1 className="my-5 text-center">Lista de usuários</h1>
+              <h1 className="my-4 text-center">Lista de usuários</h1>
             </div>
             <Row>
               {visibleItems.map((user, index) => (

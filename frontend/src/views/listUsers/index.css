@@ -13,3 +13,15 @@
 .menuButton {
   cursor: pointer;
 }
+
+.brandValues {
+  opacity: 20%;
+}
+
+.canvasBorder {
+  border: none !important;
+}
+
+.canvasCard {
+  height: 30vh !important;
+}
