@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { RandomApiModule } from './app/random-api/random-api.module'
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [RandomApiModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
