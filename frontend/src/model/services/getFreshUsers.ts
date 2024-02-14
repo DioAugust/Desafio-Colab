@@ -1,5 +1,5 @@
-import { api } from "../config/api";
-import { User } from "../types/User";
+import { api } from "../config/index";
+import { User } from "../types/index";
 
 const getFreshUsers = async (): Promise<User[]> => {
   const response = await api.get("/freshUsers");

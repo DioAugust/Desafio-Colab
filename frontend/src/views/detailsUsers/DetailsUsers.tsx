@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { User } from "../../model/types/User"
+import { Col, Container, Row, Card, Image, Form, Spinner } from "react-bootstrap"
 import { useParams } from "react-router-dom"
+
+import { User } from "../../model/types/User"
 import { getUser } from "../../model/services/index"
+
 import NavBar from "views/components/navbar/NavBar"
-import { Col, Container, Row, Card, Image, Form } from "react-bootstrap"
-import CustomOffcanvas from "../components/CustomCanvas"
+import CustomOffcanvas from "../components/customCanvas/CustomCanvas"
 
 const DetailsUsers = () => {
     const { userId } = useParams()
     const [user, setUser] = useState<User | null>(null)
     const [show, setShow] = useState(false)
+    const [loading, setLoading] = useState(true);
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -17,21 +20,38 @@ const DetailsUsers = () => {
     useEffect(() => {
         if (!userId) return
         const fetchData = async () => {
-            const usersData = await getUser(userId)
-            setUser(usersData)
+            try {
+                const usersData: User = await getUser(userId)
+                setUser(usersData)
+            }
+            finally {
+                setLoading(false)
+            
+            }
         }
         fetchData()
     }, [userId])
 
+    if (loading) {
+        return (
+          <div className="text-center mt-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        );
+      }
+    
+
     return (
-        <Container fluid>
-            <NavBar handleShow={handleShow} />
+        <div className="w-100">
+            <NavBar handleShow={handleShow}/>
             <Container fluid>
                 <Row>
-                    <Col md={2} className="p-0 d-none d-lg-block">
+                    <Col md={3} className="p-0 d-none d-lg-block offCanvas">
                         <CustomOffcanvas show={show} handleClose={handleClose} filtrarUsuariosNomeTerm={'false'} />
                     </Col>
-                    <Col md={10}>
+                    <Col md={9}>
                         <div>
                             <h1 className="my-4 fw-bold text-center titleList">Perfil</h1>
                         </div>
@@ -69,7 +89,7 @@ const DetailsUsers = () => {
                             </Col>
                             <Col md={6}>
                                 <Col md={9}>
-                                    <Card className="m-2 cardStyle">
+                                    <Card className=" cardStyle">
                                         <Card.Header as="h2">Informações de contato</Card.Header>
                                         <Card.Body>
                                             <Row md={12}>
@@ -95,8 +115,8 @@ const DetailsUsers = () => {
                                     </Card>
                                 </Col>
                                 <Col md={9}>
-                                    <Card className="m-2 cardStyle">
-                                        <Card.Header as="h2">Informações de localização</Card.Header>
+                                    <Card className="cardStyle">
+                                        <Card.Header as="h2">Dados de localização</Card.Header>
                                         <Card.Body>
                                             <Row md={12}>
                                                 <Col md={6}>
@@ -126,7 +146,7 @@ const DetailsUsers = () => {
                     </Col>
                 </Row>
             </Container>
-        </Container>
+        </div>
     )
 }
 

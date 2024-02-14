@@ -1,0 +1,13 @@
+.pointer {
+    cursor: pointer;
+}
+
+.linkStyle {
+    text-decoration: none;
+    color: black;
+}
+
+.linkStyle:hover {
+    text-decoration: none;
+    color: #001475;
+}

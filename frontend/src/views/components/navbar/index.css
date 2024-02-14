@@ -6,3 +6,9 @@
   .menuButton {
     cursor: pointer;
   }
+
+  .sombraNav {
+    box-shadow: 0 0 0.5em #00000030;
+    background-color: #fff;
+    z-index: 11;
+  }

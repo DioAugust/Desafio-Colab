@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../constants/index";
 
 interface ApiInstance extends AxiosInstance {}
 

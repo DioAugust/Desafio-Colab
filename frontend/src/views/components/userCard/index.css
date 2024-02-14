@@ -1,0 +1,19 @@
+.cardStyle {
+    margin: .3em 0;
+    transition: 0.5s;
+    cursor: pointer;
+    box-shadow: 0px 0px 1em -.5em #0000007a;
+  }
+  
+  .cardStyle:hover {
+    box-shadow: 0 0 10px #00ac8b;
+    border: 1px solid #000;
+    border-radius: 5px;
+  }
+  
+  .fotoCard {
+    width: 45%;
+  }
+
+
+ 

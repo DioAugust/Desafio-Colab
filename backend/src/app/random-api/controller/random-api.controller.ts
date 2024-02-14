@@ -14,7 +14,6 @@ export class RandomApiController {
     }
     const result = await this.randomApiService.getRandomUsers()
     this.cachedUsers = result
-    console.log(this.cachedUsers)
     return this.cachedUsers
   }
 

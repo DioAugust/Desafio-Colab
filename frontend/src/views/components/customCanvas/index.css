@@ -1,0 +1,36 @@
+.buttonStyle {
+  transition-duration: 0.4s;
+}
+
+.buttonStyle:hover {
+  color: #9713c5 !important;
+}
+
+.sd {
+  outline: none !important;
+}
+
+.sd:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.email {
+  margin: 0;
+  padding: 0.5em;
+  background: #9713c5;
+  color: #fff;
+  border-radius: 5rem;
+  display: grid;
+  place-items: center;
+}
+
+.divEmail {
+  scale: 0.75;
+}
+
+.offCanvas {
+  z-index: 10;
+  box-shadow: 0 0 0.5em #00000030;
+  width: 20% !important;
+}

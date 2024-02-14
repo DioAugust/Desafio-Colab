@@ -8,10 +8,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: #f7f4f7;
-}
-
 a {
   all: unset;
 }
