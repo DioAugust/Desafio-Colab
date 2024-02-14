@@ -4,8 +4,8 @@ import { Offcanvas, Dropdown, Card, Image, Form } from 'react-bootstrap'
 interface CustomCanvasProps {
   show: boolean
   handleClose: () => void
-  carregarNewUsers: () => void
-  filtrarUsuariosNomeSetTerm: (term: string) => void
+  carregarNewUsers?: () => void
+  filtrarUsuariosNomeSetTerm?: (term: string) => void
   filtrarUsuariosNomeTerm: string
 }
 
@@ -24,14 +24,17 @@ const CustomCanvas = ({ show, handleClose, carregarNewUsers, filtrarUsuariosNome
             <Dropdown.Divider />
             <Dropdown.Item href="/lists" className="m-0 p-0 fs-5">Listar usuários</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={carregarNewUsers} className="m-0 p-0 fs-5">Carregar novos usuarios</Dropdown.Item>
+            <Dropdown.Item onClick={() => carregarNewUsers?.()} disabled={!carregarNewUsers} className="m-0 p-0 fs-5">Carregar novos usuarios</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item className="m-0 p-0 fs-5">
 
               <Form>
-                <Form.Control type="text" placeholder="Buscar por nome"
-                  value={filtrarUsuariosNomeTerm}
-                  onChange={(e) => filtrarUsuariosNomeSetTerm(e.target.value)}>
+                <Form.Control
+                  type="text"
+                  placeholder="Buscar por nome"
+                  value={filtrarUsuariosNomeTerm === 'false' ? '' : filtrarUsuariosNomeTerm}
+                  disabled={filtrarUsuariosNomeTerm === 'false'}
+                  onChange={(e) => filtrarUsuariosNomeSetTerm?.(e.target.value) ?? undefined}>
                 </Form.Control>
               </Form>
             </Dropdown.Item>

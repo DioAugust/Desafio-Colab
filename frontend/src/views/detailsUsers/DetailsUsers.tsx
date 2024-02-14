@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { User } from "../../model/types/User"
 import { useParams } from "react-router-dom"
-import { getFreshUsers, getUser } from "../../model/services/index"
+import { getUser } from "../../model/services/index"
 import NavBar from "views/components/navbar/NavBar"
-import { Col, Container, Row, Card } from "react-bootstrap"
+import { Col, Container, Row, Card, Image, Form } from "react-bootstrap"
 import CustomOffcanvas from "../components/CustomCanvas"
 
 const DetailsUsers = () => {
     const { userId } = useParams()
     const [user, setUser] = useState<User | null>(null)
-    const [activePage, setActivePage] = useState(1)
-    const [users, setUsers] = useState<User[]>([])
     const [show, setShow] = useState(false)
-    const [searchTerm, setSearchTerm] = useState("")
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-
-    const freshUser = async () => {
-        const userData = await getFreshUsers()
-        setUsers(userData)
-    }
 
     useEffect(() => {
         if (!userId) return
@@ -28,74 +20,113 @@ const DetailsUsers = () => {
             const usersData = await getUser(userId)
             setUser(usersData)
         }
-
         fetchData()
     }, [userId])
 
-    const filteredUsers = users.filter((user) => {
-        const fullName = `${user.name.first} ${user.name.last}`.toLowerCase()
-        return fullName.includes(searchTerm.toLowerCase())
-    })
-
-    // configs das pages
-    const itemsPerPage = 8
-    const totalItems = users.length
-    const totalPages = Math.ceil(totalItems / itemsPerPage)
-    // definindo o numero de paginas
-    const items = Array.from({ length: totalPages }, (_, index) => index + 1)
-    // definindo primeira e ultima pagina
-    const startIndex = (activePage - 1) * itemsPerPage
-    const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
-    // separando os usuarios por pagina
-    const visibleItems = filteredUsers.slice(startIndex, endIndex)
-
     return (
-
         <Container fluid>
             <NavBar handleShow={handleShow} />
             <Container fluid>
                 <Row>
                     <Col md={2} className="p-0 d-none d-lg-block">
-                        <CustomOffcanvas show={show} handleClose={handleClose} carregarNewUsers={freshUser} filtrarUsuariosNomeSetTerm={setSearchTerm} filtrarUsuariosNomeTerm={searchTerm} />
+                        <CustomOffcanvas show={show} handleClose={handleClose} filtrarUsuariosNomeTerm={'false'} />
                     </Col>
                     <Col md={10}>
                         <div>
-                            <h1 className="my-4 fw-bold text-center titleList">Info</h1>
+                            <h1 className="my-4 fw-bold text-center titleList">Perfil</h1>
                         </div>
                         <Row>
-
                             <Col md={6}>
                                 <Card className="m-2 cardStyle">
+                                    <Card.Header as="h1">{`${user?.name.first} ${user?.name.last}`}</Card.Header>
+                                    <Image className="w-50 mt-4 mx-auto" src={user?.picture.large} roundedCircle alt="User Thumbnail" />
+
                                     <Card.Body>
-                                        <Card.Title>{`${user?.name.first} ${user?.name.last}`}</Card.Title>
-                                        <Card.Subtitle>{user?.location.state}</Card.Subtitle>
-                                        <Card.Text>{user?.email} </Card.Text>
+                                        <Form>
+                                            <Row md={12}>
+                                                <Col md={6}>
+                                                    <Form.Label>Titulo</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.name.title}></Form.Control>
+                                                </Col>
+                                                <Col>
+                                                    <Form.Label>Idade</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.dob.age}></Form.Control>
+                                                </Col>
+                                            </Row>
+                                            <Row md={12}>
+                                                <Col md={6}>
+                                                    <Form.Label>Pais</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.location.country}></Form.Control>
+                                                </Col>
+                                                <Col>
+                                                    <Form.Label>Sexo</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.gender}></Form.Control>
+                                                </Col>
+                                            </Row>
+                                        </Form>
                                     </Card.Body>
                                 </Card>
                             </Col>
                             <Col md={6}>
-                                <Col md={6}><Card className="m-2 cardStyle">
-                                    <Card.Body>
-                                        <Card.Title>{`${user?.name.first} ${user?.name.last}`}</Card.Title>
-                                        <Card.Subtitle>{user?.location.state}</Card.Subtitle>
-                                        <Card.Text>{user?.email} </Card.Text>
-                                    </Card.Body>
-                                </Card></Col>
-                                <Col md={6}><Card className="m-2 cardStyle">
-                                    <Card.Body>
-                                        <Card.Title>{`${user?.name.first} ${user?.name.last}`}</Card.Title>
-                                        <Card.Subtitle>{user?.location.state}</Card.Subtitle>
-                                        <Card.Text>{user?.email} </Card.Text>
-                                    </Card.Body>
-                                </Card></Col>
-                            </Col>
+                                <Col md={9}>
+                                    <Card className="m-2 cardStyle">
+                                        <Card.Header as="h2">Informações de contato</Card.Header>
+                                        <Card.Body>
+                                            <Row md={12}>
+                                                <Col md={6}>
+                                                    <Form.Label>Celular</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.phone}>
+                                                    </Form.Control>
 
+                                                </Col>
+                                                <Col>
+                                                    <Form.Label>Fixo</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.cell}>
+                                                    </Form.Control>
+                                                </Col>
+                                            </Row>
+                                            <Row md={12}>
+                                                <Col md={12}>
+                                                    <Form.Label>Email</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.email}></Form.Control>
+                                                </Col>
+                                            </Row>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                                <Col md={9}>
+                                    <Card className="m-2 cardStyle">
+                                        <Card.Header as="h2">Informações de localização</Card.Header>
+                                        <Card.Body>
+                                            <Row md={12}>
+                                                <Col md={6}>
+                                                    <Form.Label>Estado</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.location.state}></Form.Control>
+                                                </Col>
+                                                <Col md={6}>
+                                                    <Form.Label>Cidade</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.location.city}></Form.Control>
+                                                </Col>
+                                            </Row>
+                                            <Row md={12}>
+                                                <Col md={6}>
+                                                    <Form.Label>Zip</Form.Label>
+                                                    <Form.Control type="text" disabled value={user?.location.postcode}></Form.Control>
+                                                </Col>
+                                                <Col>
+                                                    <Form.Label>Endereço</Form.Label>
+                                                    <Form.Control type="text" disabled value={`${user?.location.street.name}, ${user?.location.street.number}`}></Form.Control>
+                                                </Col>
+                                            </Row>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            </Col>
                         </Row>
                     </Col>
                 </Row>
             </Container>
         </Container>
-
     )
 }
 
