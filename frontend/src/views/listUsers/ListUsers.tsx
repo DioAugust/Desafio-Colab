@@ -16,6 +16,7 @@ const ListUsers = () => {
   const [activePage, setActivePage] = useState(1)
   const [users, setUsers] = useState<User[]>([])
   const [show, setShow] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -25,7 +26,6 @@ const ListUsers = () => {
     setUsers(userData)
   }
 
-
   useEffect(() => {
     const fetchData = async () => {
       const usersData = await getUsers()
@@ -34,6 +34,11 @@ const ListUsers = () => {
 
     fetchData()
   }, [activePage])
+
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.name.first} ${user.name.last}`.toLowerCase()
+    return fullName.includes(searchTerm.toLowerCase())
+  })
 
   // configs das pages
   const itemsPerPage = 8
@@ -45,7 +50,7 @@ const ListUsers = () => {
   const startIndex = (activePage - 1) * itemsPerPage
   const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
   // separando os usuarios por pagina
-  const visibleItems = users.slice(startIndex, endIndex)
+  const visibleItems = filteredUsers.slice(startIndex, endIndex)
 
   return (
     <Container fluid >
@@ -63,11 +68,10 @@ const ListUsers = () => {
         </div>
       </Navbar>
 
-
       <Container fluid>
         <Row>
           <Col md={2} className="p-0 d-none d-lg-block">
-            <CustomOffcanvas show={show} handleClose={handleClose} carregarNewUsers={freshUser} />
+            <CustomOffcanvas show={show} handleClose={handleClose} carregarNewUsers={freshUser} filtrarUsuariosNomeSetTerm={setSearchTerm} filtrarUsuariosNomeTerm={searchTerm} />
           </Col>
           <Col md={10}>
             <div>
@@ -76,15 +80,14 @@ const ListUsers = () => {
             <Row>
 
               {visibleItems.map((user, index) => (
-                <Col lg={3} md={6}>
-                  <UserCard key={index} user={user} />
+                <Col lg={3} md={6} key={index}>
+                  <UserCard user={user} />
                 </Col>
               ))}
 
             </Row>
 
             <Navbar className="justify-content-center">
-
               <Pagination className="" >
                 <Pagination.First onClick={() => setActivePage(1)} />
                 <Pagination.Prev onClick={() => setActivePage((prev) => Math.max(prev - 1, 1))} />
@@ -105,7 +108,6 @@ const ListUsers = () => {
           </Col>
         </Row>
       </Container>
-
     </Container>
   )
 }
