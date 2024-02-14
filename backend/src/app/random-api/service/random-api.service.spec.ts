@@ -60,6 +60,15 @@ describe('RandomApiService', () => {
             },
           },
           email: 'vladislava.barros@example.com',
+          login: {
+            uuid: '2576a6d5-f852-41f1-8ee9-1394143407c5',
+            username: 'yellowmeercat486',
+            password: 'splurge',
+            salt: 'eM1bW1xL',
+            md5: '3d44c26795103c43a4fe460e18a33eb6',
+            sha1: 'cfb92c8b597c3baad63a7c962b4604becb0a181f',
+            sha256: '5e1fe0c5bd17f46989825fad6a8c5038b5d15d872017b614f81f5b71759eac24',
+          },
           dob: {
             date: '1981-05-02T17:18:57.409Z',
             age: 42,
