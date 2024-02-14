@@ -10,7 +10,7 @@ interface CustomCanvasProps {
 }
 
 
-const CustomCanvas: React.FC<CustomCanvasProps> = ({ show, handleClose, carregarNewUsers, filtrarUsuariosNomeSetTerm, filtrarUsuariosNomeTerm }) => {
+const CustomCanvas = ({ show, handleClose, carregarNewUsers, filtrarUsuariosNomeSetTerm, filtrarUsuariosNomeTerm }: CustomCanvasProps) => {
   return (
 
     <Offcanvas scroll={false} show={show} onHide={handleClose} responsive="lg" backdrop="false">

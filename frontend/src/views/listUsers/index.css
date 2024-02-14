@@ -1,21 +1,23 @@
 .cardStyle {
   margin: 10px;
+  box-shadow: 0 0 1px #9713c5;
+  transition: 0.5s;
   padding: 0 5px;
   cursor: pointer;
 }
 
 .cardStyle:hover {
-  box-shadow: 0 0 10px #209ff3;
+  box-shadow: 0 0 10px #00ac8b;
   border: 1px solid #000;
   border-radius: 5px;
 }
 
-.menuButton {
-  cursor: pointer;
+.svgColab {
+  vertical-align: middle;
 }
 
-.brandValues {
-  opacity: 20%;
+.titleList {
+  color: #001475;
 }
 
 .canvasBorder {

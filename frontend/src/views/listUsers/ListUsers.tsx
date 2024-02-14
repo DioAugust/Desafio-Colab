@@ -6,9 +6,8 @@ import { getFreshUsers, getUsers } from "../../model/services/index"
 
 import UserCard from "../components/UserCard"
 import CustomOffcanvas from "../components/CustomCanvas"
+import NavBar from "views/components/navbar/NavBar"
 
-import logoColab from '../../assets/logoColab.png'
-import menu from '../../assets/menu.png'
 import './index.css'
 
 
@@ -54,19 +53,7 @@ const ListUsers = () => {
 
   return (
     <Container fluid >
-      <Navbar className="align-items-center justify-content-between">
-        <div className="justify-content-start align-items-center">
-          <Navbar.Brand href="/" className="fs-2 fw-bold colab-color">
-            <img src={logoColab} width="50" height="50" alt="colab logo" /> colab
-          </Navbar.Brand>
-        </div>
-        <div>
-          <Navbar.Brand className="brandValues fs-5 d-none d-lg-block">
-            Colaboração, Resiliência, Agilidade, Ética e Conhecimento.
-          </Navbar.Brand>
-          <img src={menu} className="d-lg-none menuButton " onClick={handleShow} width="50" height="50" alt="menu" />
-        </div>
-      </Navbar>
+      <NavBar handleShow={handleShow} />
 
       <Container fluid>
         <Row>
@@ -75,7 +62,7 @@ const ListUsers = () => {
           </Col>
           <Col md={10}>
             <div>
-              <h1 className="my-4 text-center">Lista de usuários</h1>
+              <h1 className="my-4 fw-bold text-center titleList">Clientes cadastrados</h1>
             </div>
             <Row>
 
@@ -88,11 +75,12 @@ const ListUsers = () => {
             </Row>
 
             <Navbar className="justify-content-center">
-              <Pagination className="" >
+              <Pagination  >
                 <Pagination.First onClick={() => setActivePage(1)} />
                 <Pagination.Prev onClick={() => setActivePage((prev) => Math.max(prev - 1, 1))} />
                 {items.map((number) => (
                   <Pagination.Item
+                    linkStyle={{ color: '#00ac8b' }}
                     key={number}
                     active={number === activePage}
                     onClick={() => setActivePage(number)}

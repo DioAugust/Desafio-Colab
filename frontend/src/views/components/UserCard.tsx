@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 interface UserCardProps {
     user: User
 }
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard = ({ user }: UserCardProps) => {
     const navigate = useNavigate()
 
     const handleClick = () => {
