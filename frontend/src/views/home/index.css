@@ -1,0 +1,39 @@
+.backgroundWelcome {
+  background-image: url(https://www.colab.com.br/wp-content/uploads/2024/01/img-header-2-1.png);
+  width: 1148px;
+}
+
+.titleColorHome {
+  color: #001475;
+}
+
+.colab-color-bg {
+  background-color: #9713c5 !important;
+  transition: background-color 0.8s;
+}
+
+.colab-color-bg:hover {
+  background-color: #00ac8b !important;
+}
+
+.colab-color {
+  color: #9713c5;
+}
+
+.mainStyle {
+  position: relative;
+  height: 100vh;
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media (max-width: 780px) {
+    .mainStyle {
+        height: auto;
+        background-position: top;
+        padding-top: 360px;
+        padding-bottom: 60px;
+      }
+}
+

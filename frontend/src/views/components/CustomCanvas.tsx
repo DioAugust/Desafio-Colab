@@ -1,5 +1,5 @@
 import React from 'react'
-import { Offcanvas, Dropdown, Card, Image } from 'react-bootstrap'
+import { Offcanvas, Dropdown, Card, Image, Form } from 'react-bootstrap'
 
 interface CustomCanvasProps {
   show: boolean
@@ -19,20 +19,21 @@ const CustomCanvas: React.FC<CustomCanvasProps> = ({ show, handleClose, carregar
       </Offcanvas.Header>
       <Offcanvas.Body className="m-0 p-0">
         <Dropdown className=" w-100" show>
-          <Dropdown.Menu className="canvasBorder w-100 align-items-center" show>
-            <Dropdown.Item href="/" className="m-0 p-0 d-flex justify-content-center fs-4">Home</Dropdown.Item>
+          <Dropdown.Menu className="canvasBorder w-100 " show>
+            <Dropdown.Item href="/" className="m-0 p-0 fs-5">Home</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item href="/lists" className="m-0 p-0 d-flex justify-content-center fs-4">Listar usuários</Dropdown.Item>
+            <Dropdown.Item href="/lists" className="m-0 p-0 fs-5">Listar usuários</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={carregarNewUsers} className="m-0 p-0 d-flex justify-content-center fs-4">Carregar novos usuarios</Dropdown.Item>
+            <Dropdown.Item onClick={carregarNewUsers} className="m-0 p-0 fs-5">Carregar novos usuarios</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item className = "m-0 p-0 d-flex justify-content-center fs-4">
-            <input
-                type="text"
-                placeholder="Buscar por nome"
-                value={filtrarUsuariosNomeTerm}
-                onChange={(e) => filtrarUsuariosNomeSetTerm(e.target.value)}
-              />
+            <Dropdown.Item className="m-0 p-0 fs-5">
+
+              <Form>
+                <Form.Control type="text" placeholder="Buscar por nome"
+                  value={filtrarUsuariosNomeTerm}
+                  onChange={(e) => filtrarUsuariosNomeSetTerm(e.target.value)}>
+                </Form.Control>
+              </Form>
             </Dropdown.Item>
             <Dropdown.Item className="m-0 p-0" eventKey="3">
               <Card className="canvasCard mx-3 my-5" border="black">
